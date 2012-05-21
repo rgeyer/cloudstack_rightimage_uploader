@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # Copyright (c) 2012 Ryan J. Geyer
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -19,4 +21,61 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'cloudstack_rightimage_uploader.rb'))
+require 'rubygems'
+require 'bundler/setup'
+require 'fog'
+require 'trollop'
+
+opts = Trollop::options do
+  banner <<-EOF
+A quick commandline tool to upload RightScale RightImages to a CloudStack based cloud
+
+  EOF
+  opt :host, "Cloudstack Management Server Hostname/IP - Required", :type => :string
+  opt :api_key, "Cloudstack Management Admin API Key - Required", :type => :string
+  opt :api_secret, "Cloudstack Management Admin API Secret - Required", :type => :string
+  opt :template_uri, "Remote URI of the template to upload - Required", :type => :string
+  opt :template_format, "Binary format of the template, one of (QCOW2, RAW, VHD) - Required", :type => :string
+  opt :template_hypervisor, "Hypervisor type for the template - Required", :type => :string
+  opt :template_displayname, "Display name for the template - Required", :type => :string
+  opt :template_ostypeid, "Cloudstack OS Type ID for the template - Required", :type => :string
+  opt :template_zoneid, "Cloudstack Zone ID to upload the template into", :default => -1
+  opt :template_name, "Name for the template (default: Same as --template-displayname)", :type => :string
+  opt :template_md5, "MD5 checksum of the template to be uploaded", :type => :string
+  opt :port, "Cloudstack Management API Port", :default => 8080
+  opt :path, "Cloudstack Management API Path", :default => '/client/api'
+  opt :scheme, "Cloudstack Management API HTTP scheme (http or https)", :default => 'https'
+end
+
+Trollop::die :host, "You must specify a CloudStack Management Server Hostname/IP" unless opts[:host]
+Trollop::die :api_key, "You must specify a CloudStack Management Server API Key" unless opts[:api_key]
+Trollop::die :api_secret, "You must specify a CloudStack Management Server API Secret" unless opts[:api_secret]
+Trollop::die :template_uri, "You must specify a Template to upload" unless opts[:template_uri]
+Trollop::die :template_format, "You must specify a Template format" unless opts[:template_format]
+Trollop::die :template_format, "You must specify a valid Template format" unless ['QCOW2', 'RAW', 'VHD'].include?(opts[:template_format].upcase)
+Trollop::die :template_hypervisor, "You must specify a Template hypervisor" unless opts[:template_hypervisor]
+Trollop::die :template_ostypeid, "You must specify a Template OS Type ID" unless opts[:template_ostypeid]
+Trollop::die :template_displayname, "You must specify a Template name" unless opts[:template_displayname]
+
+opts[:template_name] = opts[:template_displayname] unless opts[:template_name]
+
+cs_fog = Fog::Compute.new(
+  :provider => 'cloudstack',
+  :cloudstack_host => opts[:host],
+  :cloudstack_port => opts[:port],
+  :cloudstack_path => opts[:path],
+  :cloudstack_scheme => opts[:scheme],
+  :cloudstack_api_key => opts[:api_key],
+  :cloudstack_secret_access_key => opts[:api_secret]
+)
+
+puts cs_fog.register_template(
+  opts[:template_displayname],
+  opts[:template_format],
+  opts[:template_hypervisor],
+  opts[:template_name],
+  opts[:template_ostypeid],
+  opts[:template_uri],
+  opts[:template_zoneid],
+  opts[:template_md5] ? {'checksum' => opts[:template_md5]} : {}
+).to_yaml

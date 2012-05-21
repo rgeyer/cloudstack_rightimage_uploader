@@ -2,7 +2,54 @@
 
 A simple gem for uploading a RightScale RightImage (with a fingerprint) to CloudStack.
 
-== Contributing to fog_cs_image_upload_too
+== Usage
+
+First, install it
+
+  gem install cloudstack_rightimage_uploader
+
+Then you can run it!  This will upload the default KVM system VM for CloudStack 2.2.x
+
+  cloudstack_rightimage_uploader --host cloudstack-manager.domain.com \
+    --api-key abcdefg \
+    --api-secret 1234567 \
+    --template-uri http://download.cloud.com/releases/2.2.0/systemvm.qcow2.bz2 \
+    --template-md5 ec463e677054f280f152fcc264255d2f \
+    --template-format QCOW2 \
+    --template-hypervisor KVM \
+    --template-ostypeid 12 \
+    --template-displayname KVM_SystemVM
+  ---
+  registertemplateresponse:
+    template:
+    - templatetype: USER
+      ostypename: KVM_SystemVM
+      name: KVM_SystemVM
+      hypervisor: KVM
+      zonename: Test
+      format: QCOW2
+      ispublic: false
+      domain: ROOT
+      account: admin
+      isfeatured: false
+      displaytext: KVM_SystemVM
+      checksum: ec463e677054f280f152fcc264255d2f
+      ostypeid: 12
+      isready: false
+      id: 1
+      zoneid: 1
+      passwordenabled: false
+      domainid: 1
+      crossZones: false
+      isextractable: false
+      created: 2012-05-21T15:29:58-0700
+    count: 1
+
+== Changelog
+
+* 0.0.1 - Initial release
+
+== Contributing to cloudstack_rightimage_uploader
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.

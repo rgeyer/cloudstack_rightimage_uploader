@@ -14,8 +14,8 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "fog_cs_image_upload_too"
-  gem.homepage = "http://github.com/rgeyer/fog_cs_image_upload_too"
+  gem.name = "cloudstack_rightimage_uploader"
+  gem.homepage = "http://github.com/rgeyer/cloudstack_rightimage_uploader"
   gem.license = "MIT"
   gem.summary = %Q{TODO: one-line summary of your gem}
   gem.description = %Q{TODO: longer description of your gem}
@@ -47,7 +47,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "fog_cs_image_upload_too #{version}"
+  rdoc.title = "cloudstack_rightimage_uploader #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
