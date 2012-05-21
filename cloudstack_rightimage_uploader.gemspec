@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan J. Geyer"]
   s.date = "2012-05-21"
-  s.description = "TODO: longer description of your gem"
+  s.description = "A simple gem for uploading a RightScale RightImage (with a fingerprint) to CloudStack."
   s.email = "me@ryangeyer.com"
   s.executables = ["cloudstack_rightimage_uploader"]
   s.extra_rdoc_files = [
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "bin/cloudstack_rightimage_uploader",
-    "cloudstack_rightimage_uploader.iml",
+    "cloudstack_rightimage_uploader.gemspec",
     "lib/cloudstack_rightimage_uploader.rb",
     "test/helper.rb",
     "test/test_cloudstack_rightimage_uploader.rb"
@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.13"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "A simple gem for uploading a RightScale RightImage (with a fingerprint) to CloudStack."
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
