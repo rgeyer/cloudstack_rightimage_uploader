@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "cloudstack_rightimage_uploader"
   gem.homepage = "http://github.com/rgeyer/cloudstack_rightimage_uploader"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{A simple gem for uploading a RightScale RightImage (with a fingerprint) to CloudStack.}
+  gem.description = %Q{A simple gem for uploading a RightScale RightImage (with a fingerprint) to CloudStack.}
   gem.email = "me@ryangeyer.com"
   gem.authors = ["Ryan J. Geyer"]
   # dependencies defined in Gemfile
